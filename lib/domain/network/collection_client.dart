@@ -7,6 +7,7 @@ import 'package:unsplash/domain/network/network_contract.dart';
 
 class CollectionClient {
   final _dio = Dio();
+  int perPage = 20;
 
   CollectionClient() {
     _dio.interceptors.add(DioInterceptor());
@@ -53,5 +54,24 @@ class CollectionClient {
       _exceptCatch(e);
     }
     return null;
+  }
+
+  Future<List<Collection>> loadCollections(int page) async {
+    final queryParameters = <String, dynamic>{
+      "page": "$page",
+      "per_page": perPage.toString()
+    };
+    final collectionList = <Collection>[];
+    final response = await _dio.get(
+      '${NetworkContract.baseUrl}/collections',
+      queryParameters: queryParameters,
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final result = response.data.map((e) => Collection.fromJson(e));
+      for (final item in result) {
+        collectionList.add(item);
+      }
+    }
+    return collectionList;
   }
 }

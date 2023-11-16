@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:unsplash/ui/widgets/collection_list_widget/collection_list_model.dart';
+import 'package:unsplash/ui/widgets/collection_list_widget/collection_list_widget.dart';
 import 'package:unsplash/ui/widgets/reel_widget/reel_model.dart';
 import 'package:unsplash/ui/widgets/reel_widget/reel_widget.dart';
 
@@ -38,7 +40,10 @@ class _AppWidgetState extends State<MainWidget> {
             create: (context) => ReelModel(context),
             child: const ReelWidget(),
           ),
-          const Text('Collection'),
+          ChangeNotifierProvider(
+            create: (context) => CollectionListModel(context),
+            child: const CollectionListWidget(),
+          ),
           const Text('Liked'),
           const Text('Account'),
         ],

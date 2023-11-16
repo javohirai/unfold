@@ -4,20 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:unsplash/ui/widgets/reel_widget/reel_model.dart';
 import 'package:unsplash/ui/widgets/reel_widget/reel_photo_item.dart';
 
-class ReelWidget extends StatefulWidget {
+class ReelWidget extends StatelessWidget {
   const ReelWidget({super.key});
-
-  @override
-  State<ReelWidget> createState() => _ReelWidgetState();
-}
-
-class _ReelWidgetState extends State<ReelWidget> {
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final model = context.read<ReelModel>();
-    model.loadPhotos();
-  }
 
   @override
   Widget build(BuildContext context) {

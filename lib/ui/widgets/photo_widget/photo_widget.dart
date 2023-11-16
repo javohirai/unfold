@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 import 'package:provider/provider.dart';
 import 'package:unsplash/ui/resources/styles.dart';
 import 'package:unsplash/ui/widgets/collection_widget/collection_item_widget.dart';

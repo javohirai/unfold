@@ -6,7 +6,7 @@ import 'package:unsplash/domain/service/auth_service.dart';
 import 'package:unsplash/domain/service/photos_service.dart';
 
 class ReelModel extends ChangeNotifier {
-  var _page = 0;
+  var _photoPage = 0;
   var _photoList = <Photo>[];
 
   final _photoService = PhotoService();
@@ -14,7 +14,9 @@ class ReelModel extends ChangeNotifier {
   final BuildContext context;
   List<Photo> get photos => _photoList;
 
-  ReelModel(this.context);
+  ReelModel(this.context) {
+    _loadPhotos();
+  }
 
   void catchTokenException(BuildContext context, OauthException e) async {
     if (e.oauthReason == OauthReason.tokenIsInvalid) {
@@ -31,8 +33,8 @@ class ReelModel extends ChangeNotifier {
   }
 
   Future<void> _loadPhotos() async {
-    _page += 1;
-    final photoList = await _photoService.loadPhotos(_page);
+    _photoPage += 1;
+    final photoList = await _photoService.loadPhotos(_photoPage);
     _photoList = photoList;
     notifyListeners();
   }
@@ -50,4 +52,6 @@ class ReelModel extends ChangeNotifier {
     Navigator.of(context)
         .pushNamed(MainNavigationRouteNames.photo, arguments: photoId);
   }
+
+  
 }
