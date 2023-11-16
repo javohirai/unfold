@@ -33,7 +33,6 @@ class PhotoTitleDataProvider {
 
 class PhotoModel extends ChangeNotifier {
   final _photoService = PhotoService();
-  final _authService = AuthService();
   final String photoId;
   final BuildContext context;
   var _photoTitleDataProvider = PhotoTitleDataProvider();

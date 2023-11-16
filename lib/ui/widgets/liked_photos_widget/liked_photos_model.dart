@@ -4,7 +4,6 @@ import 'package:unsplash/domain/exception/oauth_exception.dart';
 import 'package:unsplash/domain/navigation/main_navigation.dart';
 import 'package:unsplash/domain/service/auth_service.dart';
 import 'package:unsplash/domain/service/user_service.dart';
-import 'package:unsplash/domain/service/photos_service.dart';
 
 class LikedPhotosModel extends ChangeNotifier {
   var _photoPage = 0;

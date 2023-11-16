@@ -3,7 +3,6 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import 'package:unsplash/ui/widgets/liked_photos_widget/liked_photos_item.dart';
 import 'package:unsplash/ui/widgets/liked_photos_widget/liked_photos_model.dart';
-import 'package:unsplash/ui/widgets/reel_widget/reel_photo_item.dart';
 
 class LikedPhotosWidget extends StatelessWidget {
   const LikedPhotosWidget({super.key});
