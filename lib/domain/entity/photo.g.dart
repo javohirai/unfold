@@ -116,8 +116,8 @@ Map<String, dynamic> _$PhotoLocationToJson(PhotoLocation instance) =>
 PhotoLocationPosition _$PhotoLocationPositionFromJson(
         Map<String, dynamic> json) =>
     PhotoLocationPosition(
-      latitude: (json['latitude'] as num).toDouble(),
-      longitude: (json['longitude'] as num).toDouble(),
+      latitude: (json['latitude'] as num?)?.toDouble(),
+      longitude: (json['longitude'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$PhotoLocationPositionToJson(

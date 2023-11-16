@@ -5,7 +5,6 @@ import 'package:unsplash/domain/entity/collection.dart';
 import 'package:unsplash/ui/resources/styles.dart';
 import 'package:unsplash/ui/widgets/collection_widget/collection_model.dart';
 import 'package:unsplash/ui/widgets/collection_widget/collection_photo_item.dart';
-import 'package:unsplash/ui/widgets/reel_widget/reel_photo_item.dart';
 import 'package:unsplash/ui/widgets/user_widget/user_avatar_widget.dart';
 
 class CollectionWidget extends StatelessWidget {

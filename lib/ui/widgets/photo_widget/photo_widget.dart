@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 import 'package:provider/provider.dart';
 import 'package:unsplash/ui/resources/styles.dart';
+import 'package:unsplash/ui/widgets/collection_widget/collection_item_widget.dart';
 import 'package:unsplash/ui/widgets/photo_widget/photo_model.dart';
+import 'package:unsplash/ui/widgets/tag_widget/tag_widget.dart';
 import 'package:unsplash/ui/widgets/user_widget/user_avatar_widget.dart';
 
 abstract class _PhotoColorsStyle {}
@@ -53,8 +55,8 @@ class _PhotoDetailWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListView(
-        children:  [
-          UserAvatarWidget(user:photo.user),
+        children: [
+          UserAvatarWidget(user: photo.user),
           const SizedBox(height: 10),
           const _PhotoSrcWidget(),
           const SizedBox(height: 10),
@@ -253,33 +255,9 @@ class _PhotoTagsWidget extends StatelessWidget {
       spacing: 4,
       children: tags
           .map(
-            (tag) => _TagTypeWidget(title: tag.title),
+            (tag) => TagWidget(title: tag.title),
           )
           .toList(),
-    );
-  }
-}
-
-class _TagTypeWidget extends StatelessWidget {
-  const _TagTypeWidget({
-    required this.title,
-  });
-
-  final String title;
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: AppColors.tagColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-        side: const BorderSide(
-          color: AppColors.textCustomColor,
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(toBeginningOfSentenceCase(title) ?? ''),
-      ),
     );
   }
 }
@@ -289,7 +267,7 @@ class _PhotoReleatedCollectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     final model = context.read<PhotoModel>();
+    final model = context.read<PhotoModel>();
     final photoTitleData =
         context.select((PhotoModel value) => value.photoTitleData);
     final collections = photoTitleData.photo?.relatedCollections?.results;
@@ -297,66 +275,10 @@ class _PhotoReleatedCollectionWidget extends StatelessWidget {
     if (collections == null) {
       return const SizedBox.shrink();
     }
-
-    final widgetList = collections.map((collection) {
-      final coverPhoto = collection.coverPhoto;
-      if (coverPhoto == null) return const SizedBox.shrink();
-      var tags = collection.tags;
-      Widget widgetTags = const SizedBox.shrink();
-      if (tags != null) {
-        if (tags.length > 3) {
-          tags = tags.sublist(3);
-        }
-        widgetTags = Wrap(
-          runSpacing: 4,
-          spacing: 4,
-          children:
-              tags.map((tag) => _TagTypeWidget(title: tag.title)).toList(),
-        );
-      }
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          GestureDetector(
-            onTap: () {
-              model.onCollectionTap(collection.id);
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.black.withOpacity(0.2)),
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              clipBehavior: Clip.hardEdge,
-              child: AspectRatio(
-                aspectRatio: coverPhoto.width / coverPhoto.height,
-                child: Image.network(coverPhoto.urls.small),
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            collection.title,
-            style: AppStyles.releatedCollectionTitleTextStyle,
-          ),
-          const SizedBox(height: 6),
-          Text(
-            PhotoModel.getCollectionAbout(collection),
-            style: AppStyles.locationTextStyle,
-          ),
-          widgetTags,
-          const SizedBox(height: 6),
-        ],
-      );
-    });
-
+    final widgetList = CollectionItemWidget(
+      collections: collections,
+      onCollectionTap: model.onCollectionTap,
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -365,7 +287,7 @@ class _PhotoReleatedCollectionWidget extends StatelessWidget {
           'Related collections',
           style: AppStyles.releatedCollectionTextStyle,
         ),
-        ...widgetList
+        widgetList
       ],
     );
   }

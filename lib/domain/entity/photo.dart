@@ -125,8 +125,8 @@ class PhotoLocation {
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class PhotoLocationPosition {
-  double latitude;
-  double longitude;
+  double? latitude;
+  double? longitude;
 
   PhotoLocationPosition({
     required this.latitude,
