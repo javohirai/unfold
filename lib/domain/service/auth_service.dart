@@ -1,12 +1,16 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:unsplash/domain/entity/photo_user.dart';
 import 'package:unsplash/domain/network/auth_client.dart';
 
 abstract class AuthServiceKeys {
   static const oauthCodeKey = "oauth_code";
   static const accessTokenKey = "access_token";
+  static const userIdKey = "user_id";
 }
 
 class AuthService {
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final _storage = const FlutterSecureStorage();
   final _authClient = AuthClient();
 
@@ -74,5 +78,19 @@ class AuthService {
       return true;
     }
     return false;
+  }
+
+  Future<void> setUserName(String userId) async {
+    final prefs = await _prefs;
+    await prefs.setString(AuthServiceKeys.userIdKey, userId);
+  }
+
+  Future<String?> getUsername() async {
+    final prefs = await _prefs;
+    return prefs.getString(AuthServiceKeys.userIdKey);
+  }
+
+  Future<PhotoUser?> getMe() async{
+    return await _authClient.getMe();
   }
 }

@@ -57,6 +57,12 @@ class OauthModel extends ChangeNotifier {
 
   Future<void> _getAccessToken(BuildContext context) async {
     _accessTokenGranted = await _authService.accessTokenGrant();
+    if (_accessTokenGranted) {
+      final me = await _authService.getMe();
+      if (me != null) {
+        await _authService.setUserName(me.username);
+      }
+    }
     Navigator.of(context).pushNamedAndRemoveUntil(
       MainNavigationRouteNames.loader,
       (route) => false,
