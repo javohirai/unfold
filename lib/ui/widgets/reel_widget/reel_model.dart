@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:unsplash/domain/entity/photo.dart';
 import 'package:unsplash/domain/exception/oauth_exception.dart';
 import 'package:unsplash/domain/navigation/main_navigation.dart';
-import 'package:unsplash/domain/service/auth_service.dart';
 import 'package:unsplash/domain/service/photos_service.dart';
 
 class ReelModel extends ChangeNotifier {
@@ -10,7 +9,6 @@ class ReelModel extends ChangeNotifier {
   var _photoList = <Photo>[];
 
   final _photoService = PhotoService();
-  final _authService = AuthService();
   final BuildContext context;
   List<Photo> get photos => _photoList;
 
