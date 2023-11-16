@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unsplash/domain/navigation/main_navigation.dart';
+import 'package:unsplash/domain/service/user_service.dart';
 import 'package:unsplash/utils.dart';
 import 'package:unsplash/domain/service/auth_service.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -58,7 +59,8 @@ class OauthModel extends ChangeNotifier {
   Future<void> _getAccessToken(BuildContext context) async {
     _accessTokenGranted = await _authService.accessTokenGrant();
     if (_accessTokenGranted) {
-      final me = await _authService.getMe();
+      final userService = UserService();
+      final me = await userService.getMe();
       if (me != null) {
         await _authService.setUserName(me.username);
       }

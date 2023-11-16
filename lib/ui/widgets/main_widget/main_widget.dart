@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:unsplash/ui/widgets/collection_list_widget/collection_list_model.dart';
 import 'package:unsplash/ui/widgets/collection_list_widget/collection_list_widget.dart';
+import 'package:unsplash/ui/widgets/liked_photos_widget/liked_photos_model.dart';
+import 'package:unsplash/ui/widgets/liked_photos_widget/liked_photos_widget.dart';
 import 'package:unsplash/ui/widgets/reel_widget/reel_model.dart';
 import 'package:unsplash/ui/widgets/reel_widget/reel_widget.dart';
 
@@ -44,7 +46,10 @@ class _AppWidgetState extends State<MainWidget> {
             create: (context) => CollectionListModel(context),
             child: const CollectionListWidget(),
           ),
-          const Text('Liked'),
+          ChangeNotifierProvider.value(
+            value: LikedPhotosModel(context),
+            child: const LikedPhotosWidget(),
+          ),
           const Text('Account'),
         ],
       ),

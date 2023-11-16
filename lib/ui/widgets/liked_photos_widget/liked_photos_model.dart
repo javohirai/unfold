@@ -3,18 +3,19 @@ import 'package:unsplash/domain/entity/photo.dart';
 import 'package:unsplash/domain/exception/oauth_exception.dart';
 import 'package:unsplash/domain/navigation/main_navigation.dart';
 import 'package:unsplash/domain/service/auth_service.dart';
+import 'package:unsplash/domain/service/user_service.dart';
 import 'package:unsplash/domain/service/photos_service.dart';
 
-class ReelModel extends ChangeNotifier {
+class LikedPhotosModel extends ChangeNotifier {
   var _photoPage = 0;
   var _photoList = <Photo>[];
 
-  final _photoService = PhotoService();
+  final _userService = UserService();
   final _authService = AuthService();
   final BuildContext context;
   List<Photo> get photos => _photoList;
 
-  ReelModel(this.context) {
+  LikedPhotosModel(this.context) {
     _loadPhotos();
   }
 
@@ -24,7 +25,17 @@ class ReelModel extends ChangeNotifier {
 
   Future<void> _loadPhotos() async {
     _photoPage += 1;
-    final photoList = await _photoService.loadPhotos(_photoPage);
+    var photoList;
+    try {
+      final userName = await _authService.getUsername();
+      photoList = await _userService.loadUserPhotos(
+        userName ?? '',
+        _photoPage,
+      );
+    } on OauthException catch (e) {
+      OauthException.catchTokenException(context, e);
+      return;
+    }
     _photoList = photoList;
     notifyListeners();
   }
@@ -35,6 +46,7 @@ class ReelModel extends ChangeNotifier {
       _loadPhotos();
     } on OauthException catch (e) {
       OauthException.catchTokenException(context, e);
+      return;
     }
   }
 
@@ -42,6 +54,4 @@ class ReelModel extends ChangeNotifier {
     Navigator.of(context)
         .pushNamed(MainNavigationRouteNames.photo, arguments: photoId);
   }
-
-  
 }

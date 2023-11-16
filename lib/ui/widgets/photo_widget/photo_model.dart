@@ -72,17 +72,8 @@ class PhotoModel extends ChangeNotifier {
       );
       notifyListeners();
     } on OauthException catch (e) {
-      _catchTokenException(e);
-    }
-  }
-
-  void _catchTokenException(OauthException e) async {
-    if (e.oauthReason == OauthReason.tokenIsInvalid) {
-      await _authService.saveAccessToken(null);
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        MainNavigationRouteNames.loader,
-        (route) => false,
-      );
+      OauthException.catchTokenException(context, e);
+      return;
     }
   }
 
@@ -101,7 +92,8 @@ class PhotoModel extends ChangeNotifier {
         notifyListeners();
       }
     } on OauthException catch (e) {
-      _catchTokenException(e);
+      OauthException.catchTokenException(context, e);
+      return;
     }
   }
 

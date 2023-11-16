@@ -62,15 +62,19 @@ class CollectionClient {
       "per_page": perPage.toString()
     };
     final collectionList = <Collection>[];
-    final response = await _dio.get(
-      '${NetworkContract.baseUrl}/collections',
-      queryParameters: queryParameters,
-    );
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      final result = response.data.map((e) => Collection.fromJson(e));
-      for (final item in result) {
-        collectionList.add(item);
+    try {
+      final response = await _dio.get(
+        '${NetworkContract.baseUrl}/collections',
+        queryParameters: queryParameters,
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final result = response.data.map((e) => Collection.fromJson(e));
+        for (final item in result) {
+          collectionList.add(item);
+        }
       }
+    } on DioException catch (e) {
+      _exceptCatch(e);
     }
     return collectionList;
   }

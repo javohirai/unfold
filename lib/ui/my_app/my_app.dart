@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      initialRoute: MainNavigationRouteNames.auth,
+      initialRoute: MainNavigationRouteNames.loader,
       routes: mainNavigation.routes,
       onGenerateRoute: mainNavigation.onGenerateRoutes,
     );

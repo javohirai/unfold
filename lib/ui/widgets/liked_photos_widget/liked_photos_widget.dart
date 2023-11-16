@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
-import 'package:unsplash/ui/widgets/reel_widget/reel_model.dart';
+import 'package:unsplash/ui/widgets/liked_photos_widget/liked_photos_item.dart';
+import 'package:unsplash/ui/widgets/liked_photos_widget/liked_photos_model.dart';
 import 'package:unsplash/ui/widgets/reel_widget/reel_photo_item.dart';
 
-class ReelWidget extends StatelessWidget {
-  const ReelWidget({super.key});
+class LikedPhotosWidget extends StatelessWidget {
+  const LikedPhotosWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class _ReelContentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<ReelModel>();
+    final model = context.watch<LikedPhotosModel>();
     final photos = model.photos;
 
     return Container(
@@ -31,7 +32,7 @@ class _ReelContentWidget extends StatelessWidget {
         crossAxisSpacing: 4,
         itemBuilder: (context, index) {
           model.showPhotosAtIndex(context, index);
-          return ReelPhotoItemWidget(
+          return LikedPhotosItemWidget(
             currentIndex: index,
           );
         },

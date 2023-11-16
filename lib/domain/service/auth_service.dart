@@ -1,5 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:unsplash/domain/entity/photo.dart';
 import 'package:unsplash/domain/entity/photo_user.dart';
 import 'package:unsplash/domain/network/auth_client.dart';
 
@@ -90,7 +91,4 @@ class AuthService {
     return prefs.getString(AuthServiceKeys.userIdKey);
   }
 
-  Future<PhotoUser?> getMe() async{
-    return await _authClient.getMe();
-  }
 }

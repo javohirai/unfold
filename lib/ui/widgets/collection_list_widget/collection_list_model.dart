@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:unsplash/domain/entity/collection.dart';
+import 'package:unsplash/domain/exception/oauth_exception.dart';
 import 'package:unsplash/domain/navigation/main_navigation.dart';
 import 'package:unsplash/domain/service/collection_service.dart';
 
@@ -17,9 +18,14 @@ class CollectionListModel extends ChangeNotifier {
 
   Future<void> _loadCollections() async {
     _collectionPage += 1;
-    final collectionList =
-        await _collectionService.loadCollections(_collectionPage);
-    _collectionList = collectionList;
+    try {
+      final collectionList =
+          await _collectionService.loadCollections(_collectionPage);
+      _collectionList = collectionList;
+    } on OauthException catch (e) {
+      OauthException.catchTokenException(context, e);
+      return;
+    }
     notifyListeners();
   }
 

@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
-import 'package:unsplash/domain/entity/photo_user.dart';
 import 'package:unsplash/domain/exception/oauth_exception.dart';
-import 'package:unsplash/domain/network/network_contract.dart';
 import 'package:unsplash/utils.dart';
 
 class AuthClient {
   final _dio = Dio();
+  int perPage = 20;
 
   bool _exceptCatch(DioException e) {
     final response = e.response;
+    print(e);
     if (response == null) return false;
     final responseCode = response.statusCode;
     if (responseCode == 403) {
@@ -40,17 +40,5 @@ class AuthClient {
       _exceptCatch(e);
     }
     return '';
-  }
-
-  Future<PhotoUser?> getMe() async {
-    try {
-      final response = await _dio.get('${NetworkContract.baseUrl}/me');
-      if (response.statusCode == 200) {
-        return PhotoUser.fromJson(response.data);
-      }
-    } on DioException catch (e) {
-      _exceptCatch(e);
-    }
-    return null;
   }
 }

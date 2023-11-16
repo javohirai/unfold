@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:unsplash/domain/entity/collection.dart';
 import 'package:unsplash/domain/entity/photo.dart';
+import 'package:unsplash/domain/exception/oauth_exception.dart';
 import 'package:unsplash/domain/navigation/main_navigation.dart';
 import 'package:unsplash/domain/service/collection_service.dart';
 
@@ -45,7 +46,13 @@ class CollectionModel extends ChangeNotifier {
   }
 
   void _loadCollection() async {
-    final collection = await _collectionService.loadCollection(collectionId);
+    var collection;
+    try {
+      collection = await _collectionService.loadCollection(collectionId);
+    } on OauthException catch (e) {
+      OauthException.catchTokenException(context, e);
+      return;
+    }
     if (collection == null) return;
     _collectionProvider = _collectionProvider.copyWith(
         collection: collection, title: collection.title);
