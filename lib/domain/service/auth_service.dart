@@ -21,7 +21,7 @@ class AuthService {
   ) =>
       'https://unsplash.com/oauth/authorize?client_id=$clientId&redirect_uri=$redirectUri&response_type=$responseType&scope=$scope';
 
-  IOSOptions _getIOSOptions() => IOSOptions();
+  IOSOptions _getIOSOptions() => const IOSOptions();
 
   AndroidOptions _getAndroidOptions() => const AndroidOptions(
         encryptedSharedPreferences: true,

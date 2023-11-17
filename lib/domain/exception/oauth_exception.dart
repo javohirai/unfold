@@ -10,9 +10,9 @@ class OauthException implements Exception {
 
   static void catchTokenException(
       BuildContext context, OauthException e) async {
-    final AuthService _authService = AuthService();
+    final authService = AuthService();
     if (e.oauthReason == OauthReason.tokenIsInvalid) {
-      await _authService.saveAccessToken(null);
+      await authService.saveAccessToken(null);
       Navigator.of(context).pushNamedAndRemoveUntil(
         MainNavigationRouteNames.loader,
         (route) => false,

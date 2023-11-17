@@ -4,7 +4,7 @@ import 'package:unsplash/domain/network/collection_client.dart';
 
 class CollectionService {
   final _collectionClient = CollectionClient();
-  List<Collection> _listCollection = <Collection>[];
+  final List<Collection> _listCollection = <Collection>[];
 
   Future<Collection?> loadCollection(String collectionId) async {
     return await _collectionClient.loadCollection(collectionId);

@@ -46,7 +46,7 @@ class CollectionModel extends ChangeNotifier {
   }
 
   void _loadCollection() async {
-    var collection;
+    Collection? collection;
     try {
       collection = await _collectionService.loadCollection(collectionId);
     } on OauthException catch (e) {

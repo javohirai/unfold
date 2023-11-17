@@ -8,7 +8,6 @@ class AuthClient {
 
   bool _exceptCatch(DioException e) {
     final response = e.response;
-    print(e);
     if (response == null) return false;
     final responseCode = response.statusCode;
     if (responseCode == 403) {

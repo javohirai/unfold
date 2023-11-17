@@ -14,7 +14,6 @@ class UserClient {
   }
   bool _exceptCatch(DioException e) {
     final response = e.response;
-    print(e);
     if (response == null) return false;
     final responseCode = response.statusCode;
     if (responseCode == 403) {
@@ -32,7 +31,6 @@ class UserClient {
         return PhotoUser.fromJson(response.data);
       }
     } on DioException catch (e) {
-      print('IIIIIII');
       _exceptCatch(e);
     }
     return null;
